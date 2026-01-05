@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كتيب الكوماند - النسخة الاحترافية</title>
+    <style>
+        :root {
+            --bg-color: #0f1113;
+            --book-bg: #202225;
+            --page-bg: #2f3136;
+            --text-color: #ffffff;
+            --primary-color: #588157;
+            --accent-red: #ff4d4d;
+            --spine-color: #18191c;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        .scene {
+            width: 95vw;
+            height: 90vh;
+            perspective: 3000px;
+            display: flex;
+            justify-content: flex-end; 
+            padding-right: 20px;
+        }
+
+        .book {
+            width: 45vw;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform-origin: right center;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            box-shadow: inset -5px 0px 30px rgba(0,0,0,0.5);
+            border-radius: 15px 5px 5px 15px;
+            z-index: 1;
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 45px;
+            backface-visibility: hidden;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: var(--page-bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-back {
+            transform: rotateY(-180deg);
+            background: var(--book-bg);
+            border-radius: 5px 15px 15px 5px;
+        }
+
+        .page.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .spine {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 35px;
+            height: 100%;
+            background: var(--spine-color);
+            z-index: 100;
+            border-radius: 0 10px 10px 0;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.6);
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            opacity: 0.7;
+        }
+        .page-back .page-number { left: auto; right: 20px; }
+
+        h2 { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; font-size: 2.3rem; }
+        .content { font-size: 1.35rem; line-height: 1.8; white-space: pre-line; flex-grow: 1; }
+        
+        .note-red { 
+            color: #ffffff;
+            margin-top: 15px; 
+            padding: 20px; 
+            border: 2px solid var(--accent-red); 
+            border-radius: 12px; 
+            background: rgba(255, 77, 77, 0.15);
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 20px;
+            z-index: 200;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 45px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .btn:disabled { background: #4f545c; opacity: 0.5; }
+
+        .footer-rights {
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+            text-align: center;
+            font-size: 0.85rem; /* خط صغير للهامش */
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scene">
+    <div class="book">
+        <div class="spine"></div>
+        
+        <div class="page" id="p1" style="z-index: 5;">
+            <div class="page-front" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background: linear-gradient(135deg, #1e2b1e 0%, #2f3136 100%);">
+                <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" style="max-width: 220px; margin-bottom: 20px;">
+                <h2 style="border:none; margin:0; font-size: 2rem;">EMS Academy</h2>
+                <h1 style="color:var(--primary-color); font-size: 3rem; text-align: center; margin: 15px 0;">Commander Handbook</h1>
+                <div style="width: 60%; height: 3px; background: var(--primary-color); margin: 20px 0;"></div>
+                <p style="font-size: 1.8rem; text-align: center;">كتيب تدريب وينق الكوماندر</p>
+                <div style="margin-top:40px; border:2px solid #666; padding:15px 30px; border-radius:40px; font-size: 1.2rem;">اضغط على التالي للبدء ⬅️</div>
+                <div class="page-number">1</div>
+            </div>
+            <div class="page-back">
+                <h2>تعريف الوينق</h2>
+                <div class="content" style="font-size: 1.5rem;">هو وينق الاشراف على الميدان و ادارتة و تنظيم الوحدات و التركيز على الاخطاء التي تحصل في الميدان و تكون مسؤولية لحامل الونق في تنظيمها ويكون اعلى سلطه من الدسباتش.</div>
+                <div class="page-number">2</div>
+            </div>
+        </div>
+
+        <div class="page" id="p2" style="z-index: 4;">
+            <div class="page-front">
+                <h2>قوانين الونق</h2>
+                <div class="content">
+1- الاحترام والمساوة بين الجميع وعدم التفرقة.
+2- عدم التسلط وفرض السلطة على باقي المسعفين.
+3- عدم اهمال الميدان وضبطة بالطريقة الصحيحة.
+4- الجدية في الميدان. 
+5- عدم استخدام صلاحيات الونق بشكل خاطئ واستغلالها بما لايخدم مصلحة الميدان (كالتوجه للحالات للمصالح الشخصية لإنهاء تحدي).
+6- يمنع طلب الكوماند من رتبة اعلى منك او بنفس رتبتك.
+7- في حال دخول رتبة اعلى منك يجب ابلاغة في حال حاب يستلم الكوماند.
+
+<div class="note-red">في حال مخالفتك احد القوانين سيتم محاسبتك من قبل رئاسة الأكاديمية على بند (0-23) + (3-18) وتصل العقوبة الى سحب الوينق وسترايك لمدة (تقديرية) واعادة التقديم على الوينق.</div>
+                </div>
+                <div class="page-number">3</div>
+            </div>
+            <div class="page-back">
+                <h2>مهام حامل الونق</h2>
+                <div class="content">
+ضبط الميدان بشكل كامل.
+1- التأكد من ان الديسباتش يحمل وينق الديسباتش بأستثناء:
+*من لديه تدريب على الوينق ويمكن تسليمه الديسباتش لمدة ساعة فقط. 
+* في حال لايوجد في الميدان من يحمل الوينق.
+3- التأكد من وجود نائب للدسباتش.
+4- التاكد من تركيز الدسباتش و نائبة للبلاغات.
+5- التاكد من توجية المسعفين لجميع الحالات.
+6- التاكد من توزيع الوحدات.
+7- التأكد في عدم توجيه الديسباتش لحالات الشوت فاير.
+8- تنظيم بلاغات الراديو و الالتزام بالبروتوكولات.
+                </div>
+                <div class="page-number">4</div>
+            </div>
+        </div>
+
+        <div class="page" id="p3" style="z-index: 3;">
+            <div class="page-front">
+                <h2>صلاحيات حامل الونق</h2>
+                <div class="content">
+1- تغيير الدسباتش في حال كان مهمل للبلاغات وعدم تركيزة (بعد التنبيه).
+2- التوجيه للحالات بدل الدسباتش في حال كانت لمصلحة الميدان.
+3- معاتبة و تصحيح اخطاء المسعفين والديسباتش (بأدب).
+4- التوجه للحالات دون التوجيه، مع ابلاغ الدسباتش (في حال كان لمصلحة الميدان).
+5- قطع اي بلاغ في حال كان غير ملتزم في البروتوكولات (بأدب).
+6- توجيه البلاغات دون اذن من الدسباتش (في حال كان لمصلحة الميدان).
+7- سحب الوحدة المتوجه لحالة شت فاير.
+8- صرف مركبة: jeep & durango للأشخاص (المتميزين في الميدان).
+                </div>
+                <div class="page-number">5</div>
+            </div>
+            <div class="page-back">
+                <h2>تنبيهات هامة</h2>
+                <div class="content">
+1- التركيز على الدسباتش و مدى كفاءتة في استلام الدسباتش و عدم اهمال البلاغات و الحرص على التوجيه لجميع الحالات ( الاولوية للحالات الجنائية )
+2- بلاغات الراديو دون استهتار مع الالتزام بالبروتوكولات و جعل الموجة منظمة دون اخطاء او فوضى 
+3- يجب عليك كـ كوماند التركيز مع الدسباتش في استقبال البلاغات من العسكر كالتركيز في تسجيل دخول العسكري للموجة مثال:(حياك الله ياعسكري ممكن تذكر لي اليونت؟ شاكرين لك ومتوجهين بأقصى سرعة). مع عدم مقاطعته او فرض السلطة عليه.
+4- التأكد من بلاغ العسكري وانه يحتوي على الاتي : المكان , عدد المسقطين , نوع الحالة , هل تم الانتهاء من الحالة , عدم وجود طلق نار في الموقع.
+5- صرف المركبات يكون فقط للمتميزين (بدون تحيز) في الميدان و لا يتم الصرف بشكل عشوائي .
+                </div>
+                <div class="page-number">6</div>
+            </div>
+        </div>
+
+        <div class="page" id="p4" style="z-index: 2;">
+            <div class="page-front">
+                <div style="display:flex; justify-content:center; align-items:center; height:100%;">
+                     <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" style="max-width: 200px; opacity: 0.2;">
+                </div>
+                <div class="page-number">7</div>
+            </div>
+            <div class="page-back">
+                <div style="text-align:center; flex-grow:1; display:flex; flex-direction:column; justify-content:center; padding: 20px;">
+                    <h1 style="color:var(--primary-color); margin:0; font-size: 2.8rem;">Ministry of Health</h1>
+                    <div style="margin-top:30px; line-height:2; font-size: 1.4rem;">
+                        <p style="margin: 5px 0;">EMS Academy Commander: Rema Alkhaldi</p>
+                        <p style="margin: 5px 0;">EMS Academy Deputy: Mohammed Abdullah</p>
+                        <p style="margin: 5px 0;">Supervisor Of EMS Academy: Jory Walton</p>
+                        <p style="margin: 5px 0;">ALL EMS FTO</p>
+                    </div>
+                    <div class="footer-rights">
+                        الحقوق محفوظة لوزارة الصحة في سيرفر MT <br>
+                        اعداد نودي | برمجة وتطوير Ali_go
+                    </div>
+                </div>
+                <div class="page-number">8</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevPage()" disabled>السابق</button>
+    <button class="btn" id="nextBtn" onclick="nextPage()">التالي</button>
+</div>
+
+<script>
+    let currentLoc = 1;
+    let numOfPapers = 4;
+    let maxLoc = numOfPapers + 1;
+
+    function nextPage() {
+        if(currentLoc < maxLoc) {
+            const page = document.getElementById(`p${currentLoc}`);
+            page.classList.add("flipped");
+            page.style.zIndex = currentLoc;
+            currentLoc++;
+            updateButtons();
+        }
+    }
+
+    function prevPage() {
+        if(currentLoc > 1) {
+            currentLoc--;
+            const page = document.getElementById(`p${currentLoc}`);
+            page.classList.remove("flipped");
+            page.style.zIndex = (numOfPapers - currentLoc) + 10;
+            updateButtons();
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = (currentLoc === 1);
+        document.getElementById('nextBtn').disabled = (currentLoc === maxLoc);
+    }
+</script>
+
+</body>
+</html>
